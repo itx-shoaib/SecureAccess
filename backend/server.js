@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv"; //this library is used to config .env and use in server
+import {errorHandler,notFound} from "./middlewares/errorMiddlewares.js"
 dotenv.config();
 
 const port = process.env.PORT || 5000;
@@ -8,6 +9,8 @@ const port = process.env.PORT || 5000;
 import userRoutes from "./routes/userRoutes.js";
 
 const app = express()
+app.use(notFound);
+app.use(errorHandler);
 
 app.use(express.json());
 app.use("/api/users",userRoutes);
