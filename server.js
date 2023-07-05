@@ -1,7 +1,10 @@
 import express from "express";
 import dotenv from "dotenv"; //this library is used to config .env and use in server
 import {errorHandler,notFound} from "./middlewares/errorMiddlewares.js"
+import {database} from "./database/index.js";
+
 dotenv.config();
+database()
 
 const port = process.env.PORT || 5000;
 
