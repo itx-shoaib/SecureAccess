@@ -16,6 +16,14 @@ const logoutUser = asyncHandler( async (req,res)=>{
 })
 
 
+//  @desc   :  Register user
+//  @Route  :  POST /api/users
+//  @access :  Public
+const registerUser = asyncHandler( async (req,res)=>{
+    res.status(200).json({message:"Register user"})
+})
+
+
 //  @desc   :  Get user profile
 //  @Route  :  GET /api/users/profile
 //  @access :  Private
@@ -36,5 +44,6 @@ export {
     authUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    registerUser
 }
