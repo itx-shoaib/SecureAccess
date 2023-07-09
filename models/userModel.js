@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt, { hash } from "bcryptjs";
 
 const userSchema = mongoose.Schema(
   {
@@ -20,6 +21,16 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Pre-save hook in Mongoose, executed before saving the user document
+userSchema.pre('save',async function (next){
+  if(!this.isModified('password')){ // Check if the password has been modified
+    next(); // If not modified, move to the next middleware
+  }
+
+  const salt = await bcrypt.genSalt(10); // Generate a salt for password hashing
+  this.password = await bcrypt.hash(this.password, salt); // Hash the password using bcrypt
+});
 
 
 const User = mongoose.model('User', userSchema);
