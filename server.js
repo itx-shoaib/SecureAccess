@@ -14,14 +14,15 @@ import userRoutes from "./routes/userRoutes.js";
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(notFound);
-app.use(errorHandler);
 
-app.use(express.json());
 app.use("/api/users",userRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+
+// Making these middlewares to be in last because they throw error if place before routes
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port,()=>console.log(`Server is running on port ${port}`))
