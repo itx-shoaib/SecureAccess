@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 // Pre-save hook in Mongoose, executed before saving the user document
 userSchema.pre('save',async function (next){
   if(!this.isModified('password')){ // Check if the password has been modified
