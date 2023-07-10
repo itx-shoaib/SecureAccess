@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv"; //this library is used to config .env and use in server
 import {errorHandler,notFound} from "./middlewares/errorMiddlewares.js"
 import {database} from "./database/index.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 database()
@@ -14,6 +15,8 @@ import userRoutes from "./routes/userRoutes.js";
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
+app.use(cookieParser());
 
 app.use("/api/users",userRoutes);
 
