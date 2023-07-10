@@ -6,7 +6,27 @@ import generateToken from "../utils/generateToken.js"
 //  @Route  :  POST /api/users/auth
 //  @access :  Public
 const authUser = asyncHandler( async (req,res)=>{
-    res.status(200).json({message:"Auth Test"})
+    const { email,password } = req.body;
+
+    if(!email || !password){
+        res.status(400);
+        throw new Error("Email or password missing!")
+    }
+
+    const user = await User.findOne({email});
+
+    if(user){
+        generateToken(res, user._id)
+
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        })
+    } else {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
 })
 
 
